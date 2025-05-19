@@ -1,0 +1,52 @@
+% expert_system_dual.pl
+% Medical Diagnosis Expert System
+% Diagnoses diseases based on symptoms
+
+% Configuration - set to true for interactive questioning
+interactive_mode(false).
+
+% Hardcoded symptoms for patient 'john' (used when interactive_mode=false)
+% Uncomment the symptoms you want to test:
+% has_symptom(john, fever).
+% has_symptom(john, cough).
+% has_symptom(john, fatigue).
+
+% Measles example symptoms:
+has_symptom(john, rash).
+has_symptom(john, headache).
+
+% Predicate to ask about symptoms
+ask_symptom(Person, Symptom) :-
+    interactive_mode(true), !,
+    format('Does ~w have ~w? (yes/no) ', [Person, Symptom]),
+    read(Response),
+    Response == yes.
+
+ask_symptom(Person, Symptom) :-
+    interactive_mode(false),
+    has_symptom(Person, Symptom).
+
+% Disease diagnosis rules
+has_disease_interactive(Person, flu) :-
+    ask_symptom(Person, fever),
+    ask_symptom(Person, cough),
+    ask_symptom(Person, fatigue).
+
+has_disease_interactive(Person, measles) :-
+    ask_symptom(Person, fever),
+    ask_symptom(Person, rash),
+    ask_symptom(Person, headache).
+
+% Main execution point
+main :-
+    Person = john,
+    format('Diagnosing diseases for ~w~n', [Person]),
+    (has_disease_interactive(Person, Disease) ->
+        format('Disease diagnosed for ~w: ~w~n', [Person, Disease])
+    ;
+        format('No disease diagnosed for ~w.~n', [Person])
+    ),
+    halt.
+
+% Start the program automatically
+:- initialization(main).
