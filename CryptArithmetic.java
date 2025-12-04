@@ -88,7 +88,7 @@ class CryptArithmetic {
 }
 
 /* This Java program solves Cryptarithmetic puzzles,
- where each letter in a word represents a unique digit (0–9).
+ where each letter in a word represents a unique digit (0â9).
   It takes three words as input in the format WORD1 + WORD2 = RESULT,
    checks all valid digit-letter assignments using backtracking, 
    and prints solutions that satisfy the equation. The program ensures 
